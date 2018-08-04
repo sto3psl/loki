@@ -1,0 +1,19 @@
+{
+  "name": "loki",
+  "version": "0.0.1",
+  "description": "CLI tool to transform csv files with various delimiter options.",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "keywords": [
+    "csv",
+    "table",
+    "cli"
+  ],
+  "author": "Fabian Gündel",
+  "license": "ISC",
+  "devDependencies": {
+    "ava": "1.0.0-beta.6"
+  }
+}
