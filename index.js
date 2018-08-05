@@ -1,17 +1,30 @@
 const fs = require('fs')
-const os = require('os')
 const readline = require('readline')
+const arg = require('arg')
 
-const transform = require('./csv-transform')
+const { transform, findDelimiter } = require('./csv-utils')
 
-const writeStream = fs.createWriteStream(process.argv[3])
+const args = arg({
+  '--input': String,
+  '--output': String,
+  '--delimiter': String,
+
+  '-i': '--input',
+  '-o': '--output'
+})
 
 const rl = readline.createInterface({
-  input: fs.createReadStream(process.argv[2]),
-  output: writeStream,
+  input: fs.createReadStream(args['--input']),
+  output: fs.createWriteStream(args['--output']),
   crlfDelay: Infinity
 })
 
+let delimiter = args['--delimiter']
+
 rl.on('line', line => {
-  rl.output.write(transform(line))
+  if (!delimiter) {
+    delimiter = findDelimiter(line)
+  }
+
+  rl.output.write(transform(line, delimiter))
 })
